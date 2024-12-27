@@ -1,0 +1,442 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Define color variables */
+  --black-bg: #000; /* Black background */
+  --deep-blue: #0d1b2a; /* Deep blue */
+  --electric-blue: #00e0ff; /* Electric blue */
+  --hover-deep-blue: #00e0ff; /* Hover deep blue */
+  --dark-bg-mobile: #111; /* Darker background for mobile */
+  --light-gray: #444; /* Light gray for mobile menu items */
+}
+
+/* Body Styling */
+body {
+  font-family: "Arial", sans-serif;
+  line-height: 1.6;
+  background-color: var(--black-bg); /* Black background */
+  color: #fff;
+  overflow: hidden;
+}
+/* body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  overflow: hidden;
+} */
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background: rgba(0, 0, 0, 0.543); */
+  padding: 1rem 2rem;
+  /* color: white; */
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
+  position: relative;
+  z-index: 1000;
+  /* border-bottom: 3px solid var(--electric-blue); Electric blue border */
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--electric-blue); /* Electric blue color */
+  text-transform: uppercase;
+  text-shadow: 0 0 10px var(--electric-blue), 0 0 20px var(--electric-blue),
+    0 0 30px var(--electric-blue); /* Neon glow effect */
+  transition: text-shadow 0.3s ease;
+}
+
+.logo:hover {
+  text-shadow: 0 0 20px var(--electric-blue), 0 0 40px var(--electric-blue),
+    0 0 60px var(--electric-blue);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  /* color: var(--electric-blue); Electric blue color */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  position: relative;
+
+  transition: color 0.3s ease, transform 0.3s ease;
+  /* background-color: white; */
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--electric-blue); /* Electric blue underline */
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+  color: var(--hover-deep-blue); /* Deep blue color on hover */
+  transform: scale(1.1);
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Hamburger Button */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu-toggle:hover {
+  color: var(--electric-blue); /* Electric blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block; /* Show hamburger icon */
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: var(--dark-bg-mobile); /* Darker background for mobile */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    display: none;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .nav-links a:hover {
+    color: var(--hover-deep-blue); /* Deep blue color on hover */
+    background-color: var(--light-gray);
+  }
+}
+/* @media (max-width: 560px) {
+  .navbar {
+    flex-direction: row;
+  }
+}
+@media (max-width: 495px) {
+  .navbar {
+    flex-direction: row;
+  }
+} */
+/* const API_KEY = "aabdf765f82342968810c869cfe3aa27"; */
+
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover; /* Ensures the whole image is visible */
+  background-repeat: no-repeat; /* Prevents repetition of the image */
+  background-position: center; /* Centers the image */
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+/* Transparent Black Layer */
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Black overlay with 50% opacity */
+  z-index: 1; /* Ensure it stays above the background */
+}
+.details {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  color: #fff;
+  z-index: 5;
+  width: 40%;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.details.visible {
+  opacity: 1;
+}
+
+.details h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.details p {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  .background-container {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .background {
+    background-size: cover;
+    background-position: center;
+  }
+  .details {
+    top: 28%;
+    width: 65%;
+    left: 5%;
+  }
+
+  .details h1 {
+    font-size: 28px;
+  }
+
+  .details p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1.6rem; /* Further reduced font size for logo */
+  }
+
+  .nav-links a {
+    font-size: 0.9rem; /* Further reduced font size for links */
+  }
+
+  .background-container {
+    height: 60vh;
+  }
+
+  .details {
+    top: 40%;
+    width: 60%;
+  }
+
+  .details h1 {
+    font-size: 24px;
+  }
+
+  .details p {
+    font-size: 14px;
+  }
+}
+@media (max-width: 671px) {
+  .background-container {
+    height: 60vh;
+  }
+  .menu-toggle {
+    font-size: 1.8rem;
+  }
+  .details {
+    top: 30%;
+    width: 60%;
+  }
+
+  .details h1 {
+    font-size: 24px;
+  }
+
+  .details p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .background-container {
+    height: 50vh;
+  }
+  .logo {
+    font-size: 1.4rem; /* Smallest font size for logo */
+  }
+
+  .nav-links a {
+    font-size: 0.8rem; /* Smallest font size for links */
+  }
+  .details {
+    top: 30%;
+    width: 80%;
+    left: 10%;
+  }
+
+  .details h1 {
+    font-size: 20px;
+  }
+
+  .details p {
+    font-size: 12px;
+  }
+}
+@media (max-width: 495px) {
+  .background-container {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .background {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .details {
+    top: 28%;
+    width: 80%;
+    left: 10%;
+  }
+
+  .details h1 {
+    font-size: 20px;
+  }
+
+  .details p {
+    display: none;
+  }
+}
+@media (max-width: 431px) and (min-width: 357px) {
+  .background-container {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .logo {
+    font-size: 1.2rem; /* Very small logo font */
+  }
+
+  .nav-links a {
+    font-size: 0.7rem; /* Very small link font */
+  }
+  .background {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .details {
+    top: 23%;
+    width: 85%;
+    left: 10%;
+  }
+
+  .details h1 {
+    font-size: 20px;
+  }
+
+  .details p {
+    display: none;
+  }
+}
+@media (max-width: 357px) {
+  .background-container {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .menu-toggle {
+    font-size: 1.6rem;
+  }
+  .logo {
+    font-size: 1rem; /* Very small logo font */
+  }
+
+  .nav-links a {
+    font-size: 0.6rem; /* Very small link font */
+  }
+  .background {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .details {
+    top: 20%;
+    width: 85%;
+    left: 10%;
+  }
+
+  .details h1 {
+    font-size: 20px;
+  }
+
+  .details p {
+    display: none;
+  }
+}
+@media (max-width: 308px) {
+  .background-container {
+    height: auto;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .background {
+    background-size: cover;
+    background-position: center;
+  }
+
+  .details {
+    top: 18%;
+    width: 80%;
+    left: 10%;
+  }
+
+  .details h1 {
+    font-size: 20px;
+  }
+
+  .details p {
+    display: none;
+  }
+}
